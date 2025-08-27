@@ -1631,7 +1631,6 @@ static ssize_t razer_attr_write_macro_led_effect(struct device *dev, struct devi
         request.transaction_id.id = 0x1F;
         break;
     
-
     default:
         printk(KERN_WARNING "razerkbd: macro_led_effect not supported for this model\n");
         return -EINVAL;
