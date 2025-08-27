@@ -591,7 +591,7 @@ class RazerHuntsmanV3ProTKL(_RazerDeviceBrightnessSuspend):
                'get_macro_mode', 'set_macro_mode', 'get_macro_effect', 'set_macro_effect',
                'get_game_mode', 'set_game_mode', 'set_custom_effect', 'set_key_row', 'get_keyboard_layout']
 
-    DEVICE_IMAGE = "https://assets2.razerzone.com/images/pnx.assets/d01af9710e2077e2b88eb9dc6f68f62f/quick-actuation-adjustment-mode.webp"
+    DEVICE_IMAGE = "https://dl.razerzone.com/src2/13672/13672-1-en-v1.png"
 
     def __init__(self, *args, **kwargs):
         super().__init__(*args, **kwargs)

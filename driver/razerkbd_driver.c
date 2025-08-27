@@ -500,6 +500,7 @@ static void razer_set_device_mode(struct razer_kbd_device *device, unsigned char
     case USB_DEVICE_ID_RAZER_ORNATA_V3_X:
     case USB_DEVICE_ID_RAZER_ORNATA_V3_X_ALT:
     case USB_DEVICE_ID_RAZER_ORNATA_V3_TENKEYLESS:
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO_TKL:
         request.transaction_id.id = 0x1F;
         break;
 
@@ -859,7 +860,12 @@ static ssize_t razer_attr_write_game_led_state(struct device *dev, struct device
         request = razer_chroma_standard_set_led_state(VARSTORE, GAME_LED, enabled);
         request.transaction_id.id = 0xFF;
         break;
-
+    
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO_TKL:
+        request = razer_chroma_standard_set_led_state(VARSTORE, GAME_LED, enabled);
+        request.transaction_id.id = 0x1F;
+        break;
+    
     default:
         printk(KERN_WARNING "razerkbd: game_led_state not supported for this model\n");
         return -EINVAL;
@@ -949,6 +955,11 @@ static ssize_t razer_attr_read_game_led_state(struct device *dev, struct device_
         request.transaction_id.id = 0xFF;
         break;
 
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO_TKL:
+        request = razer_chroma_standard_get_led_state(VARSTORE, GAME_LED);
+        request.transaction_id.id = 0x1F;
+        break;
+    
     default:
         printk(KERN_WARNING "razerkbd: game_led_state not supported for this model\n");
         return -EINVAL;
@@ -1614,6 +1625,12 @@ static ssize_t razer_attr_write_macro_led_effect(struct device *dev, struct devi
         request = razer_chroma_standard_set_led_effect(VARSTORE, MACRO_LED, enabled);
         request.transaction_id.id = 0xFF;
         break;
+
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO_TKL:
+        request = razer_chroma_standard_set_led_effect(VARSTORE, MACRO_LED, enabled);
+        request.transaction_id.id = 0x1F;
+        break;
+    
 
     default:
         printk(KERN_WARNING "razerkbd: macro_led_effect not supported for this model\n");
@@ -3805,6 +3822,16 @@ static ssize_t razer_attr_read_matrix_brightness(struct device *dev, struct devi
         }
         request.transaction_id.id = 0xFF;
         break;
+    
+    case USB_DEVICE_ID_RAZER_HUNTSMAN_V3_PRO_TKL:
+        if (is_blade_laptop(device)) {
+            request = razer_chroma_misc_get_blade_brightness();
+        } else {
+            request = razer_chroma_standard_get_led_brightness(VARSTORE, BACKLIGHT_LED);
+        }
+        request.transaction_id.id = 0x1F;
+        break;
+    
 
     default:
         printk(KERN_WARNING "razerkbd: matrix_brightness not supported for this model\n");
